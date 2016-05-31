@@ -16,6 +16,13 @@ public class Helper {
     }
 
     // print string to user and return it
+
+    /**
+     * Init scanner and return input text
+     *
+     * @param textToPrint value to print on screen
+     * @return input text
+     */
     public static String inputText(String textToPrint) {
         System.out.println(textToPrint);
         String str = getSc().nextLine();

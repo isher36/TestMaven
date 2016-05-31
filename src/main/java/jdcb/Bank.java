@@ -1,7 +1,7 @@
 package jdcb;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.math.BigDecimal;
+import java.sql.*;
 import java.util.Scanner;
 
 /**
@@ -11,38 +11,58 @@ import java.util.Scanner;
 
 public class Bank {
 
+    String url = "jdbc:postgresql://localhost:5432/hb_cours";
+    String login = "admin";
+    String passwd = "300181";
 
-    private String iban;
-    private double solde;
 
-    public String getIban() {
-        return iban;
+    public void transferMoney(String iban, double solde) {
+        try {
+            String request = "SELECT * FROM bank WHERE iban = ?";
+            String[] param = {iban};
+            JdbcManager jdbcManager = new JdbcManager();
+
+            ResultSet resultSet = jdbcManager.getStatement(request, param);
+
+            while (resultSet.next()) {
+                // on recup le solde actuel
+                double actualSolde = resultSet.getDouble("solde");
+                double newSolde = actualSolde + solde;
+                // on le met à jour
+                resultSet.updateDouble("solde", newSolde);
+                resultSet.updateRow();
+            }
+
+        } catch (SQLException e) {
+            e.toString();
+        }
     }
 
-    public void setIban(String iban) {
-        this.iban = iban;
+    public boolean isValidIban(String iban) {
+        if (iban.matches("^(\\d{3}-?\\d+)$")) {
+            return true;
+        }
+        return false;
     }
 
-    public double getSolde() {
-        return solde;
+    public double getSolde(String iban) throws Exception {
+        if (isValidIban(iban) == false)
+            throw new Exception("Erreur, iban invalide ");
+
+        String request = "SELECT * FROM bank WHERE iban = ?";
+        String[] param = {iban};
+
+        JdbcManager jdbcManager = new JdbcManager();
+        ResultSet resultSet = jdbcManager.getStatement(request, param);
+
+        resultSet.last();
+        if (resultSet.getRow() == 1) {
+            return resultSet.getDouble("solde");
+        } else if (resultSet.getRow() == 0) {
+            throw new Exception("Erreur, compte introuvable");
+        } else
+            throw new Exception("Erreur, on es pas senser avoir 2 lignes !");
     }
 
-    public void setSolde(double solde) {
-        this.solde = solde;
-    }
-
-
-    public void transferMoney() {
-        String url = "jdbc:postgresql://localhost:5432/hb_cours";
-        String login = "admin";
-        String passwd = "300181";
-
-
-//        try (Connection c = DriverManager.getConnection(url, login, passwd))
-//        {
-//            // Code using the connection
-//
-//        }
-    }
 
 }
