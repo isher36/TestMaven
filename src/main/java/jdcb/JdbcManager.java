@@ -81,6 +81,14 @@ public class JdbcManager {
         return getStatement(getConnection(), request, param);
     }
 
+    /**
+     * return Resultset of sql request
+     *
+     * @param connection
+     * @param request
+     * @param param      String parameter as Array
+     * @return
+     */
     public ResultSet getStatement(Connection connection, String request, String[] param) {
         try {
             // on prepare la requete

@@ -16,6 +16,12 @@ public class Bank {
     String passwd = "300181";
 
 
+    /**
+     * Add money to an anncout
+     *
+     * @param iban
+     * @param solde money to add
+     */
     public void transferMoney(String iban, double solde) {
         try {
             String request = "SELECT * FROM bank WHERE iban = ?";
@@ -38,6 +44,11 @@ public class Bank {
         }
     }
 
+    /**
+     * return true if iban is valid
+     * @param iban
+     * @return
+     */
     public boolean isValidIban(String iban) {
         if (iban.matches("^(\\d{3}-?\\d+)$")) {
             return true;
@@ -45,6 +56,12 @@ public class Bank {
         return false;
     }
 
+    /**
+     * return solde of account
+     * @param iban
+     * @return
+     * @throws Exception
+     */
     public double getSolde(String iban) throws Exception {
         if (isValidIban(iban) == false)
             throw new Exception("Erreur, iban invalide ");
