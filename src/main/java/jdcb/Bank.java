@@ -18,15 +18,15 @@ public class Bank {
 
     /**
      * Add money to an anncout
-     *
      * @param iban
      * @param solde money to add
      */
     public void transferMoney(String iban, double solde) {
+        JdbcManager jdbcManager = null;
         try {
             String request = "SELECT * FROM bank WHERE iban = ?";
             String[] param = {iban};
-            JdbcManager jdbcManager = new JdbcManager();
+            jdbcManager = new JdbcManager();
 
             ResultSet resultSet = jdbcManager.getStatement(request, param);
 
@@ -39,8 +39,12 @@ public class Bank {
                 resultSet.updateRow();
             }
 
+
         } catch (SQLException e) {
             e.toString();
+        } finally {
+            if (jdbcManager != null)
+                jdbcManager.closeConnection();
         }
     }
 
