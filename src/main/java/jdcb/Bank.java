@@ -54,10 +54,7 @@ public class Bank {
      * @return
      */
     public boolean isValidIban(String iban) {
-        if (iban.matches("^(\\d{3}-?\\d+)$")) {
-            return true;
-        }
-        return false;
+        return iban.matches("^(\\d{3}-?\\d+)$");
     }
 
     /**
@@ -67,7 +64,7 @@ public class Bank {
      * @throws Exception
      */
     public double getSolde(String iban) throws Exception {
-        if (isValidIban(iban) == false)
+        if (!isValidIban(iban))
             throw new Exception("Erreur, iban invalide ");
 
         String request = "SELECT * FROM bank WHERE iban = ?";

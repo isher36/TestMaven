@@ -3,10 +3,13 @@ package jdcb;
 import junit.framework.TestCase;
 import org.junit.Test;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by isher on 31/05/2016.
  */
-public class BankTest extends TestCase {
+public class BankTest {
 
     @Test
     public void testIsValidIban() throws Exception {
@@ -56,6 +59,7 @@ public class BankTest extends TestCase {
 
     }
 
+    @Test
     public void testTransferMoney() throws Exception {
         //Given
 

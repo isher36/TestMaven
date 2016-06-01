@@ -1,7 +1,5 @@
 package jdcb;
 
-import java.util.DoubleSummaryStatistics;
-
 /**
  * Hello world!
  */
