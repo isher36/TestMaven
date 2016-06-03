@@ -1,14 +1,14 @@
 package jdcb;
 
-import java.math.BigDecimal;
-import java.sql.*;
-import java.util.Scanner;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by isher on 30/05/2016.
  */
 
 
+@SuppressWarnings("ALL")
 public class Bank {
 
     String url = "jdbc:postgresql://localhost:5432/hb_cours";

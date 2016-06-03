@@ -1,15 +1,11 @@
 package jdcb;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.*;
 
 /**
  * Created by isher on 31/05/2016.
  */
-public class JdbcManager {
+class JdbcManager {
 
     // GETTER/SETTER
     Connection connection;
@@ -77,7 +73,7 @@ public class JdbcManager {
         }
     }
 
-    public ResultSet getStatement(String request, String[] param) {
+    public ResultSet getStatement(String request, String[] param) throws SQLException {
         return getStatement(getConnection(), request, param);
     }
 
@@ -89,23 +85,16 @@ public class JdbcManager {
      * @param param      String parameter as Array
      * @return
      */
-    public ResultSet getStatement(Connection connection, String request, String[] param) {
-        try {
-            // on prepare la requete
-            PreparedStatement preparedStatement = connection.prepareStatement(request, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+    public ResultSet getStatement(Connection connection, String request, String[] param) throws SQLException {
+        // on prepare la requete
+        PreparedStatement preparedStatement = connection.prepareStatement(request, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-            // on set les parametres
-            int i = 1;
-            for (String p : param) {
-                preparedStatement.setString(i, p);
-            }
-            preparedStatement.execute();
-            return preparedStatement.getResultSet();
-
-
-        } catch (SQLException e) {
-            e.toString();
+        // on set les parametres
+        int i = 1;
+        for (String p : param) {
+            preparedStatement.setString(i, p);
         }
-        return null;
+        preparedStatement.execute();
+        return preparedStatement.getResultSet();
     }
 }
