@@ -43,19 +43,20 @@ public class BankTest {
     }
 
     @Test(expected = Exception.class)
-    public void testGetSoldeWithInvalideAccount() {
+    public void testGetSoldeWithInvalideAccount() throws Exception {
         //Given
         Bank bank = new Bank();
         Throwable e = null;
         //When
         String iban = "0-0";
-        try {
-            double solde = bank.getSolde(iban);
-        } catch (Throwable ex) {
-            e = ex;
-        }
+//        try {
+//            double solde =
+        bank.getSolde(iban);
+//        } catch (Throwable ex) {
+//            e = ex;
+//        }
         //Then
-        assertTrue(e instanceof Exception);
+//        assertTrue(e instanceof Exception);
 
     }
 
